@@ -1,4 +1,4 @@
-// MINGKA_SEO_DOMAIN_V7
+// MINGKA_SEO_DOMAIN_V8
 // 새 공식 도메인(mingka.tcflick.com)을 기준으로 robots/sitemap과 HTML의 SEO 주소를 통일합니다.
 export default {
   async fetch(request, env) {
@@ -14,17 +14,23 @@ export default {
     if (url.pathname === "/sitemap.xml") {
       const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://mingka.tcflick.com/</loc><lastmod>2026-09-11</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-<url><loc>https://mingka.tcflick.com/long-term-rental-vs-lease.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/car-purchase-vs-rental.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/long-term-rental-guide.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/car-lease-guide.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/long-term-rental-cost-guide.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/car-buying-checklist.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/lease-contract-checklist.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/privacy.html</loc><lastmod>2026-09-11</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-<url><loc>https://mingka.tcflick.com/terms.html</loc><lastmod>2026-09-11</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-<url><loc>https://mingka.tcflick.com/affiliate.html</loc><lastmod>2026-09-09</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+<url><loc>https://mingka.tcflick.com/</loc><lastmod>2026-09-13</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+<url><loc>https://mingka.tcflick.com/long-term-rental-vs-lease.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/car-purchase-vs-rental.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/long-term-rental-guide.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/car-lease-guide.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/long-term-rental-cost-guide.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/car-buying-checklist.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/lease-contract-checklist.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/initial-car-cost.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/car-mileage-guide.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/car-maintenance-insurance.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/early-termination-guide.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/car-lease-end.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mingka.tcflick.com/contact.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+<url><loc>https://mingka.tcflick.com/privacy.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+<url><loc>https://mingka.tcflick.com/terms.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+<url><loc>https://mingka.tcflick.com/affiliate.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>`;
       return new Response(sitemap,{status:200,headers:{"Content-Type":"application/xml; charset=UTF-8","Cache-Control":"no-store, no-cache, must-revalidate, max-age=0"}});
     }
@@ -46,8 +52,6 @@ export default {
     }
 
     // 내가 사용하는 브라우저만 GA4에서 제외할 수 있도록 내부 방문 플래그를 지원합니다.
-    // 최초 1회 /?internal=1 로 접속하면 localStorage에 플래그가 저장되고,
-    // 이후 이 브라우저에서는 GA4 페이지뷰 전송을 실행하지 않습니다.
     html = html.replace(/gtag\(['"]config['"],\s*['"]G-06DTYM04S2['"]\);/i,
       `if (localStorage.getItem("mingka_internal") !== "1") { gtag("config", "G-06DTYM04S2"); }`);
     html = html.replace(/<head>/i,
@@ -65,16 +69,11 @@ export default {
     const middleAd = `<div id="mingkaAdMiddle" class="mingka-ad-slot mingka-ad-large" data-ad-position="middle"></div>`;
     const bottomAd = `<div id="mingkaAdBottom" class="mingka-ad-slot" data-ad-position="bottom"></div>`;
 
-    // 상단 광고는 body 시작 부분에 1개만 배치합니다.
     html = html.replace(/<body([^>]*)>/i, `<body$1>${adStyle}${topAd}`);
-
-    // 중간 광고는 설문조사 섹션(#quiz)이 끝나는 바로 아래에 배치합니다.
-    // 이렇게 하면 사용자가 4문항 설문을 마친 직후 자연스럽게 광고를 보게 됩니다.
     if (/<section\s+id=["']quiz["'][\s\S]*?<\/section>/i.test(html)) {
       html = html.replace(/(<section\s+id=["']quiz["'][\s\S]*?<\/section>)/i, `$1\n${middleAd}`);
     }
 
-    // 하단 광고는 푸터 바로 앞에 배치합니다.
     const footer = `
 <footer class="mingka-footer">
   <div class="mingka-footer-brand">밍카</div>
