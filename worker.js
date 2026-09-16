@@ -1,5 +1,5 @@
-// MINGKA_SEO_DOMAIN_V9
-// 공식 도메인 기준으로 robots/sitemap과 HTML SEO 주소를 통일합니다.
+// MINGKA_SEO_DOMAIN_V10
+// 공식 도메인 기준으로 robots/sitemap과 HTML SEO 주소를 통일하고 공통 푸터를 안전하게 구성합니다.
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -75,7 +75,6 @@ export default {
     );
 
     // 현재 요청 경로를 기준으로 페이지별 canonical URL을 만듭니다.
-    // /index.html은 루트 주소로 통일하고, 나머지 HTML은 자기 자신의 주소를 canonical로 사용합니다.
     const canonicalPath = url.pathname === "/index.html" ? "/" : url.pathname;
     const canonicalUrl = `https://mingka.tcflick.com${canonicalPath}`;
     const canonicalTag = `<link rel="canonical" href="${canonicalUrl}" />`;
@@ -105,8 +104,7 @@ export default {
       `<head>\n<script>if(new URLSearchParams(location.search).get("internal")==="1"){localStorage.setItem("mingka_internal","1");}</script>`
     );
 
-    // 광고 영역을 상단, 설문조사 아래, 하단으로 분산합니다.
-    // 실제 광고 내용이 들어오지 않은 빈 슬롯은 화면에서 완전히 숨깁니다.
+    // 광고 영역은 실제 광고가 채워졌을 때만 보이도록 빈 슬롯을 숨깁니다.
     const adStyle = `
 <style>
 .mingka-ad-slot{width:100%;min-height:90px;margin:18px 0;padding:10px;display:flex;align-items:center;justify-content:center;border:1px dashed #ddd8e8;border-radius:14px;background:#faf9fc;overflow:hidden;box-sizing:border-box}
@@ -130,7 +128,8 @@ export default {
       );
     }
 
-    // 공통 푸터를 추가합니다.
+    // 기존 footer 전체를 제거한 뒤 하나의 정상적인 footer만 삽입합니다.
+    // 중첩 footer 때문에 저작권 문구와 안내 문구가 겹치던 문제를 방지합니다.
     const footer = `
 <footer class="mingka-footer">
   <div class="mingka-footer-brand">밍카</div>
@@ -139,25 +138,32 @@ export default {
     <span> | </span>
     <a href="/privacy.html">개인정보처리방침</a>
     <span> | </span>
-    <span>문의하기</span>
+    <a href="/contact.html">문의하기</a>
   </nav>
+  <p class="mingka-footer-notice">밍카의 진단 결과와 추천은 참고용이며 실제 차량 이용·계약 조건은 제휴 업체와 상담을 통해 확인해주세요.</p>
   <div class="mingka-footer-copy">© 2026 밍카. All rights reserved.</div>
 </footer>
 <style>
-.mingka-footer{margin-top:40px;padding:28px 20px 34px;border-top:1px solid #eeeaf3;background:#faf9fc;text-align:center;color:#999;font-size:12px;line-height:1.8}
-.mingka-footer-brand{margin-bottom:5px;color:#7567e8;font-size:16px;font-weight:900}
-.mingka-footer nav{margin-bottom:8px}
-.mingka-footer nav a{color:#777;text-decoration:none}
+.mingka-footer{margin-top:40px;padding:30px 20px 34px;border-top:1px solid #eeeaf3;background:#faf9fc;text-align:center;color:#888;font-size:12px;line-height:1.8}
+.mingka-footer-brand{margin-bottom:8px;color:#7567e8;font-size:17px;font-weight:900}
+.mingka-footer nav{margin-bottom:12px}
+.mingka-footer nav a{color:#666;text-decoration:none}
 .mingka-footer nav a:hover{text-decoration:underline}
+.mingka-footer-notice{max-width:460px;margin:0 auto 12px;color:#999;font-size:11px;line-height:1.7}
 .mingka-footer-copy{color:#aaa;font-size:11px}
 </style>`;
 
-    // 기존 footer 태그가 있을 때 하단 광고와 공통 푸터를 삽입합니다.
-    const updatedHtml = html.replace(/<footer>/i, `${bottomAd}\n${footer}`);
+    // 기존 footer가 있으면 footer 전체를 교체하고, 없으면 body 끝에 추가합니다.
+    if (/<footer[\s>]/i.test(html)) {
+      html = html.replace(/<footer[\s\S]*?<\/footer>/i, `${bottomAd}\n${footer}`);
+    } else {
+      html = html.replace(/<\/body>/i, `${bottomAd}\n${footer}\n</body>`);
+    }
+
     const headers = new Headers(response.headers);
     headers.delete("content-length");
 
-    return new Response(updatedHtml, {
+    return new Response(html, {
       status: response.status,
       statusText: response.statusText,
       headers
