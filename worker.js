@@ -106,10 +106,12 @@ export default {
     );
 
     // 광고 영역을 상단, 설문조사 아래, 하단으로 분산합니다.
+    // 실제 광고 내용이 들어오지 않은 빈 슬롯은 화면에서 완전히 숨깁니다.
     const adStyle = `
 <style>
 .mingka-ad-slot{width:100%;min-height:90px;margin:18px 0;padding:10px;display:flex;align-items:center;justify-content:center;border:1px dashed #ddd8e8;border-radius:14px;background:#faf9fc;overflow:hidden;box-sizing:border-box}
-.mingka-ad-slot::before{content:"광고 영역";font-size:11px;color:#aaa;letter-spacing:.05em}
+.mingka-ad-slot:empty{display:none}
+.mingka-ad-slot:not(:empty)::before{content:"광고 영역";font-size:11px;color:#aaa;letter-spacing:.05em}
 .mingka-ad-large{min-height:250px}
 @media(max-width:600px){.mingka-ad-slot{min-height:70px;margin:14px 0}.mingka-ad-large{min-height:180px}}
 </style>`;
