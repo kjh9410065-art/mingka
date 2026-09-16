@@ -16,9 +16,10 @@ export default {
     const url = new URL(request.url);
 
     // 헤더의 브랜드 로고를 영문 공식 표기 MINGKA로 변경합니다.
+    // 내부에 다른 요소가 있어도 닫는 태그를 깨뜨리지 않도록 첫 텍스트만 교체합니다.
     html = html.replace(
-      /(<[^>]+class=["']brand["'][^>]*>)[\s\S]*?(<\/[^>]+>)/i,
-      "$1MINGKA$2"
+      /(<[^>]+class=["']brand["'][^>]*>)[\s]*[^<]*/i,
+      "$1MINGKA"
     );
 
     // 자동으로 삽입되는 푸터 브랜드도 MINGKA로 통일합니다.
