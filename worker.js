@@ -1,4 +1,4 @@
-// MINGKA_SEO_DOMAIN_V10
+// MINGKA_SEO_DOMAIN_V11
 // 공식 도메인 기준으로 robots/sitemap과 HTML SEO 주소를 통일하고 공통 푸터를 안전하게 구성합니다.
 export default {
   async fetch(request, env) {
@@ -94,6 +94,30 @@ export default {
       );
     }
 
+    // 브랜드 검색에서 한글과 영문 표기가 함께 인식되도록 기본 SEO 메타 정보를 보강합니다.
+    // 실제 화면 기능은 추가하지 않고 검색엔진이 읽는 정보만 보완합니다.
+    if (url.pathname === "/" || url.pathname === "/index.html") {
+      html = html.replace(
+        /<meta\s+name=["']keywords["'][^>]*>/i,
+        '<meta name="keywords" content="MINGKA, mingka, 밍카, 자동차 장기렌트, 장기렌터카, 자동차 리스, 장기렌트 추천, 자동차 리스 추천">'
+      );
+      html = html.replace(
+        /<meta\s+property=["']og:site_name["'][^>]*>/i,
+        '<meta property="og:site_name" content="MINGKA (밍카)" />'
+      );
+      html = html.replace(
+        /<title>[\s\S]*?<\/title>/i,
+        '<title>MINGKA (밍카) | 장기렌트·리스 차량 이용 방법 비교</title>'
+      );
+    }
+
+    // 상단 브랜드 영역이 기존 한글 표기일 때만 MINGKA로 안전하게 교체합니다.
+    // 다른 본문 문구나 진단 기능에는 영향을 주지 않습니다.
+    html = html.replace(
+      /(<[^>]*class=["'][^"']*\bbrand\b[^"']*["'][^>]*>)\s*밍카\s*(<\/[^>]+>)/i,
+      '$1MINGKA$2'
+    );
+
     // 내부 테스트 방문은 GA4에서 제외할 수 있도록 플래그를 적용합니다.
     html = html.replace(
       /gtag\(['"]config['"],\s*['"]G-06DTYM04S2['"]\);/i,
@@ -132,7 +156,7 @@ export default {
     // 중첩 footer 때문에 저작권 문구와 안내 문구가 겹치던 문제를 방지합니다.
     const footer = `
 <footer class="mingka-footer">
-  <div class="mingka-footer-brand">밍카</div>
+  <div class="mingka-footer-brand">MINGKA</div>
   <nav aria-label="사이트 정보">
     <a href="/terms.html">이용약관</a>
     <span> | </span>
@@ -141,7 +165,7 @@ export default {
     <a href="/contact.html">문의하기</a>
   </nav>
   <p class="mingka-footer-notice">밍카의 진단 결과와 추천은 참고용이며 실제 차량 이용·계약 조건은 제휴 업체와 상담을 통해 확인해주세요.</p>
-  <div class="mingka-footer-copy">© 2026 밍카. All rights reserved.</div>
+  <div class="mingka-footer-copy">© 2026 MINGKA. All rights reserved.</div>
 </footer>
 <style>
 .mingka-footer{margin-top:40px;padding:30px 20px 34px;border-top:1px solid #eeeaf3;background:#faf9fc;text-align:center;color:#888;font-size:12px;line-height:1.8}
