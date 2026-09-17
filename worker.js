@@ -129,12 +129,14 @@ export default {
     );
 
     // 광고 영역은 실제 광고가 채워졌을 때만 보이도록 빈 슬롯을 숨깁니다.
+    // 키보드 사용자는 모든 링크/버튼의 현재 포커스 위치를 명확하게 확인할 수 있도록 합니다.
     const adStyle = `
 <style>
 .mingka-ad-slot{width:100%;min-height:90px;margin:18px 0;padding:10px;display:flex;align-items:center;justify-content:center;border:1px dashed #ddd8e8;border-radius:14px;background:#faf9fc;overflow:hidden;box-sizing:border-box}
 .mingka-ad-slot:empty{display:none}
 .mingka-ad-slot:not(:empty)::before{content:"광고 영역";font-size:11px;color:#aaa;letter-spacing:.05em}
 .mingka-ad-large{min-height:250px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #7567e8;outline-offset:3px;border-radius:6px}
 @media(max-width:600px){.mingka-ad-slot{min-height:70px;margin:14px 0}.mingka-ad-large{min-height:180px}}
 </style>`;
     const topAd = `<div id="mingkaAdTop" class="mingka-ad-slot" data-ad-position="top"></div>`;
