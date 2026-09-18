@@ -1,4 +1,4 @@
-// MINGKA_SEO_DOMAIN_V11
+// MINGKA_SEO_DOMAIN_V12
 // 공식 도메인 기준으로 robots/sitemap과 HTML SEO 주소를 통일하고 공통 푸터를 안전하게 구성합니다.
 export default {
   async fetch(request, env) {
@@ -19,6 +19,7 @@ export default {
         status: 200,
         headers: {
           "Content-Type": "text/plain; charset=UTF-8",
+          "X-Content-Type-Options": "nosniff",
           "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"
         }
       });
@@ -50,6 +51,7 @@ export default {
         status: 200,
         headers: {
           "Content-Type": "application/xml; charset=UTF-8",
+          "X-Content-Type-Options": "nosniff",
           "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"
         }
       });
@@ -186,8 +188,12 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #75
       html = html.replace(/<\/body>/i, `${bottomAd}\n${footer}\n</body>`);
     }
 
+    // 브라우저가 응답 MIME을 추측해 해석하지 않도록 하고 외부 요청에 전달되는
+    // Referrer 정보를 최소화해 보안과 안정성을 높입니다.
     const headers = new Headers(response.headers);
     headers.delete("content-length");
+    headers.set("X-Content-Type-Options", "nosniff");
+    headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 
     return new Response(html, {
       status: response.status,
