@@ -44,7 +44,7 @@ export default {
 <url><loc>https://mingka.tcflick.com/car-lease-end.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://mingka.tcflick.com/contact.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 <url><loc>https://mingka.tcflick.com/privacy.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-<url><loc>https://mingka.tcflick.com/terms.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+<url><loc>https://mingka.tcflick.com/terms.html</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 <url><loc>https://mingka.tcflick.com/affiliate.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>`;
       return new Response(sitemap, {
