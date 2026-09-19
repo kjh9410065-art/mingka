@@ -1,6 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="밍카">
-  <!-- 밍카 브랜드 컬러를 사용한 단순한 M 아이콘입니다. -->
-  <rect width="64" height="64" rx="16" fill="#7567e8"/>
-  <!-- 작은 화면에서도 식별되도록 밍카의 첫 글자를 크게 표시합니다. -->
-  <text x="32" y="44" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="900" fill="#ffffff">M</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="밍카">
+  <defs>
+    <linearGradient id="mingkaGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d8df2"/>
+      <stop offset="1" stop-color="#39d9c6"/>
+    </linearGradient>
+  </defs>
+  <!-- 밍카의 차량 이용 비교 서비스에 맞춰 집/이용 공간을 연상시키는 M 심볼을 사용합니다. -->
+  <rect x="18" y="18" width="476" height="476" rx="92" fill="#ffffff" stroke="#e8f0fb" stroke-width="10"/>
+  <!-- M 형태와 지붕선을 결합한 밍카 심볼입니다. -->
+  <path d="M132 326V178c0-25 29-38 48-21l76 67 76-67c19-17 48-4 48 21v148c0 24-19 43-43 43s-43-19-43-43v-67l-38 34c-18 16-44 16-62 0l-38-34v67c0 24-19 43-43 43s-43-19-43-43Z" fill="url(#mingkaGradient)"/>
+  <!-- 심볼 중앙의 창문 요소로 차량 이용 공간의 의미를 보완합니다. -->
+  <rect x="225" y="314" width="24" height="24" rx="5" fill="#78b5f5"/>
+  <rect x="263" y="314" width="24" height="24" rx="5" fill="#78b5f5"/>
+  <rect x="225" y="352" width="24" height="24" rx="5" fill="#78b5f5"/>
+  <rect x="263" y="352" width="24" height="24" rx="5" fill="#78b5f5"/>
 </svg>
