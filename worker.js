@@ -194,6 +194,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #75
     headers.delete("content-length");
     headers.set("X-Content-Type-Options", "nosniff");
     headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+    // 정적 HTML의 반복적인 Worker 재작성 비용을 줄이되, 짧은 시간 동안만 엣지에서 캐시합니다.
+    headers.set("Cache-Control", "public, max-age=60, s-maxage=600, stale-while-revalidate=86400");
 
     return new Response(html, {
       status: response.status,
