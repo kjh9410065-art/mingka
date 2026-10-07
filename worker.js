@@ -130,12 +130,12 @@ export default {
       `<head>\n<script>if(new URLSearchParams(location.search).get("internal")==="1"){localStorage.setItem("mingka_internal","1");}</script>`
     );
 
-    // 광고 영역은 실제 광고가 채워졌을 때만 보이도록 빈 슬롯을 숨깁니다.
+    // 광고 슬롯은 Yandex 비동기 렌더링을 위해 초기 상태에서도 유지합니다.
     // 키보드 사용자는 모든 링크/버튼의 현재 포커스 위치를 명확하게 확인할 수 있도록 합니다.
     const adStyle = `
 <style>
-.mingka-ad-slot{width:100%;min-height:90px;margin:18px 0;padding:10px;display:flex;align-items:center;justify-content:center;border:1px dashed #ddd8e8;border-radius:14px;background:#faf9fc;overflow:hidden;box-sizing:border-box}
-.mingka-ad-slot:empty{display:none}
+.mingka-ad-slot{width:100%;min-height:90px;margin:18px 0;padding:10px;display:flex;align-items:center;justify-content:center;border:1px dashed #ddd8e8;border-radius:14px;background:#faf9fc;overflow:visible;box-sizing:border-box}
+.mingka-ad-slot:empty{display:flex}
 .mingka-ad-slot:not(:empty)::before{content:"광고 영역";font-size:11px;color:#aaa;letter-spacing:.05em}
 .mingka-ad-large{min-height:250px}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #7567e8;outline-offset:3px;border-radius:6px}
