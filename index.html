@@ -28,6 +28,10 @@
 <!-- Google Analytics 4: 밍카 사이트 방문 및 주요 행동을 측정합니다. -->
 <!-- Yandex.RTB 공통 로더: 모든 Yandex 광고 단위가 사용할 콜백 배열을 초기화합니다. -->
 <script>window.yaContextCb = window.yaContextCb || [];</script>
+<script>
+  // Keep this manually placed Yandex ad unit alongside Auto ads when configured as an exception.
+  window.APExceptionBlocks = Array.from(new Set([...(window.APExceptionBlocks || []), "R-A-20181622-1"]));
+</script>
 <!-- Yandex.RTB 공통 스크립트를 비동기로 불러옵니다. -->
 <script src="https://yandex.ru/ads/system/context.js" async></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-06DTYM04S2"></script>
