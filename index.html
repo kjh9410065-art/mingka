@@ -33,7 +33,7 @@
   window.APExceptionBlocks = Array.from(new Set([...(window.APExceptionBlocks || []), "R-A-20181622-1"]));
 </script>
 <!-- Yandex.RTB 공통 스크립트를 비동기로 불러옵니다. -->
-<script src="https://yandex.ru/ads/system/context.js" async></script>
+<script src="https://yandex.ru/ads/system/context.js" async onload="console.info('[MINGKA Yandex] context.js 로드 완료')" onerror="console.error('[MINGKA Yandex] context.js 로드 실패')"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-06DTYM04S2"></script>
 <script>
   // GA4가 사용할 dataLayer를 먼저 준비합니다.
@@ -72,7 +72,7 @@ main{padding:24px}.quiz-wrap{max-width:1180px;margin:auto}.quiz-title{text-align
 .top{grid-template-columns:1fr;padding:36px 42px 46px;row-gap:24px}.top h1{grid-column:1;grid-row:auto}.top p{grid-column:1;grid-row:auto;margin-top:0}.hero{grid-column:1;grid-row:auto;max-width:620px;justify-self:center}.seo-intro,main{padding-left:34px;padding-right:34px}.options{grid-template-columns:1fr 1fr}.option{min-height:150px}.seo-grid{grid-template-columns:1fr 1fr}.faq-list{grid-template-columns:1fr}.partner-list{grid-template-columns:1fr 1fr}
 }
 </style>
-<script data-page-id="20181622" src="https://yandex.ru/ads/system/ap-loader.js" async></script>
+<script data-page-id="20181622" src="https://yandex.ru/ads/system/ap-loader.js" async onload="console.info('[MINGKA Yandex] ap-loader.js 로드 완료')" onerror="console.error('[MINGKA Yandex] ap-loader.js 로드 실패')"></script>
 </head>
 <body>
 <div class="app">
