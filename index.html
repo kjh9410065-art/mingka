@@ -145,7 +145,7 @@ prevQuestion.addEventListener('click',()=>{clearTimeout(questionTimer);showQuest
 document.getElementById('restart').addEventListener('click',()=>{clearTimeout(questionTimer);options.forEach(option=>{option.classList.remove('selected');option.setAttribute('aria-pressed','false');});result.classList.remove('is-visible');showQuestion(1);document.getElementById('quiz').scrollIntoView({behavior:'smooth',block:'start'});});
 window.addEventListener('scroll',()=>{floatingQuiz.classList.toggle('show',window.scrollY>600&&!result.classList.contains('is-visible'));});
 </script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"밍카","url":"https://mingka.tcflick.com/","description":"차량 구매 전 장기렌트와 리스 등 차량 이용 방법을 비교해볼 수 있는 간단한 체크 서비스"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"밍카","alternateName":"MINGKA","inLanguage":"ko-KR","url":"https://mingka.tcflick.com/","description":"차량 구매 전 장기렌트와 리스 등 차량 이용 방법을 비교해볼 수 있는 간단한 체크 서비스"}</script>
 <nav aria-label="추가 자동차 이용 안내" style="max-width:1100px;margin:32px auto;padding:20px;line-height:2"><h2>자동차 이용 추가 안내</h2><ul><li><a href="/initial-car-cost.html">자동차 초기 비용</a></li><li><a href="/car-mileage-guide.html">주행거리 안내</a></li><li><a href="/car-maintenance-insurance.html">유지비와 보험</a></li><li><a href="/early-termination-guide.html">중도해지 안내</a></li><li><a href="/car-lease-end.html">리스 계약 종료</a></li><li><a href="/affiliate.html">제휴 안내</a></li></ul></nav>
 </body>
 </html>
