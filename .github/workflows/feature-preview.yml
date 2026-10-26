@@ -1,0 +1,27 @@
+name: MINGKA isolated preview
+on:
+  push:
+    branches: ['preview/all-features-20261026']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate offline preview source
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('feature-preview.html').read_text()
+          assert '<meta name="robots" content="noindex,nofollow">' in s
+          for term in ['id="results"','id="save"','id="csv"','id="pdf"','id="saved"','@media(max-width:420px)']:
+              assert term in s,term
+          print('MINGKA preview static checks passed')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mingka-feature-preview
+          path: feature-preview.html
+          retention-days: 14
