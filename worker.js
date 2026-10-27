@@ -52,8 +52,10 @@ export default {
       });
     }
 
-    // 실제 정적 HTML을 가져옵니다.
-    const response = await env.ASSETS.fetch(request);
+    // html_handling="none"은 / 경로를 자동으로 index.html에 연결하지 않습니다.
+    // 홈페이지는 명시적으로 파일을 가져오되 공개 URL과 canonical은 /를 유지합니다.
+    const assetRequest = url.pathname === "/" ? new URL("/index.html", url) : request;
+    const response = await env.ASSETS.fetch(assetRequest);
     if (response.status !== 200) return response;
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.includes("text/html")) return response;

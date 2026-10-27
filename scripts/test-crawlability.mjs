@@ -14,7 +14,7 @@ const env = {
     async fetch(input) {
       const pathname = new URL(input instanceof URL ? input.href :
         typeof input === "string" ? input : input.url).pathname;
-      const file = pathname === "/" ? "index.html" : pathname.slice(1);
+      const file = pathname.slice(1);
       if (!file || file.includes("/") || file.startsWith(".")) {
         return new Response("Not found", { status: 404 });
       }
@@ -37,6 +37,16 @@ test("Cloudflare의 .html 자동 307 리디렉션을 비활성화한다", async 
   const config = JSON.parse(await readFile(path.join(root, "wrangler.jsonc"), "utf8"));
   assert.equal(config.assets.html_handling, "none");
   assert.equal(config.assets.run_worker_first, true);
+});
+
+test("정적 자산이 /를 404로 반환해도 Worker가 홈페이지를 제공한다", async () => {
+  const directAsset = await env.ASSETS.fetch(new URL(`${origin}/`));
+  assert.equal(directAsset.status, 404);
+  const home = await fetchPage("/");
+  assert.equal(home.status, 200);
+  const html = await home.text();
+  assert.ok(html.includes(`<link rel="canonical" href="${origin}/"`));
+  assert.ok(html.includes("MINGKA"));
 });
 
 test("사이트맵의 모든 주소가 실제 HTML 및 자체 canonical에 연결된다", async () => {
