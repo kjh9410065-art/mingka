@@ -10,6 +10,19 @@ export default {
       return Response.redirect(newUrl, 301);
     }
 
+    // 정적 자산의 기본 307 리디렉션 대신 .html을 공식 주소로 유지합니다.
+    // 기존에 공유된 확장자 없는 주소는 영구적으로 공식 URL로 보냅니다.
+    if (url.pathname === "/index.html" || url.pathname === "/index" || url.pathname === "/index/") {
+      return Response.redirect(`https://mingka.tcflick.com/${url.search}`, 301);
+    }
+    if (/^\/[a-z0-9-]+\/?$/.test(url.pathname)) {
+      const htmlPath = `${url.pathname.replace(/\/$/, "")}.html`;
+      const asset = await env.ASSETS.fetch(new URL(htmlPath, url));
+      if (asset.status === 200 && (asset.headers.get("content-type") || "").includes("text/html")) {
+        return Response.redirect(`https://mingka.tcflick.com${htmlPath}${url.search}`, 301);
+      }
+    }
+
     // 검색엔진이 수집할 수 있도록 robots.txt를 직접 제공합니다.
     if (url.pathname === "/robots.txt") {
       const robots = "User-agent: Yeti\nAllow: /\n\n" +
@@ -27,28 +40,10 @@ export default {
 
     // 검색엔진이 사용할 최신 사이트맵을 공식 도메인으로 직접 제공합니다.
     if (url.pathname === "/sitemap.xml") {
-      const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://mingka.tcflick.com/</loc><lastmod>2026-09-20</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-<url><loc>https://mingka.tcflick.com/long-term-rental-vs-lease.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/car-purchase-vs-rental.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/long-term-rental-guide.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/car-lease-guide.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/long-term-rental-cost-guide.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/car-buying-checklist.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/lease-contract-checklist.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/initial-car-cost.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/car-mileage-guide.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/car-maintenance-insurance.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/early-termination-guide.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/car-lease-end.html</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mingka.tcflick.com/contact.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-<url><loc>https://mingka.tcflick.com/privacy.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-<url><loc>https://mingka.tcflick.com/terms.html</loc><lastmod>2026-09-19</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-<url><loc>https://mingka.tcflick.com/affiliate.html</loc><lastmod>2026-09-13</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-</urlset>`;
-      return new Response(sitemap, {
-        status: 200,
+      // 정적 sitemap.xml 하나를 원본으로 사용해 새 페이지의 누락을 방지합니다.
+      const sitemap = await env.ASSETS.fetch(request);
+      return new Response(sitemap.body, {
+        status: sitemap.status,
         headers: {
           "Content-Type": "application/xml; charset=UTF-8",
           "X-Content-Type-Options": "nosniff",
@@ -59,6 +54,7 @@ export default {
 
     // 실제 정적 HTML을 가져옵니다.
     const response = await env.ASSETS.fetch(request);
+    if (response.status !== 200) return response;
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.includes("text/html")) return response;
 
